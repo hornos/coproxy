@@ -1,0 +1,19 @@
+.htaccess
+---------------------------------------------------------------------------------
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f [NC]
+RewriteCond %{REQUEST_FILENAME} !-d [NC]
+RewriteCond %{REQUEST_URI} !^/index.php
+RewriteRule ^(.+)$ index.php/$1 [QSA] 
+---------------------------------------------------------------------------------
+
+
+
+index.php
+---------------------------------------------------------------------------------
+require('./coProxy.php');
+$proxy = new coProxy('public/url','private/url');
+if(!$proxy->valid('proxy.lock'))
+die(file_get_contents('./na.html'));
+$proxy->run();
+---------------------------------------------------------------------------------
